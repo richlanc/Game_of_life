@@ -8,6 +8,7 @@ Created on 3 Nov 2013
 import os
 import sys
 import time
+import serial
 from argparse import ArgumentParser, RawTextHelpFormatter
 from game_of_life.engine.game_of_life import GameOfLife
 from game_of_life.engine.rule_sets import RuleSetStandard
@@ -69,7 +70,18 @@ def _print_grid(grid):
         print(line)
 
 
-def main(automated, turn_limit, grid_string):
+def _output_to_serial(grid, serial):
+    serial.write("clr\n")
+
+    for x, row in enumerate(grid.get_cells()):
+        for y, col in enumerate(row):
+            if col.get_state() == Alive():
+                serial.write("set %s %s\n" % (x, y))
+
+    serial.write("drw\n")
+
+
+def main(automated, turn_limit, grid_string, serial=None):
     grid = _parse_grid_string(grid_string)
     gol = GameOfLife(RuleSetStandard(), grid)
 
@@ -77,7 +89,11 @@ def main(automated, turn_limit, grid_string):
     running = True
     while running:
 
-        _print_grid(gol.get_current_generation())
+        if not serial:
+            _print_grid(gol.get_current_generation())
+        else:
+            _output_to_serial(gol.get_current_generation(), serial)
+
         print('Turn:  %s' % turns)
 
         if not automated:
@@ -92,6 +108,9 @@ def main(automated, turn_limit, grid_string):
         if automated:
             time.sleep(0.5)
         turns += 1
+
+    if serial:
+        serial.close()
 
 if __name__ == '__main__':
     # Variables needed:
@@ -115,6 +134,8 @@ if __name__ == '__main__':
                         help='Run the game of life without pausing for input')
     parser.add_argument('-f', '--file', type=str,
                         help='Specify a file containing a grid')
+    parser.add_argument('-s', '--serial', type=str,
+                        help='If you want to output to the prototype display, specify the serial device')
     args = parser.parse_args()
 
     # Set up args for main
@@ -127,4 +148,8 @@ if __name__ == '__main__':
     else:
         grid_s = _get_grid()
 
-    main(args.automated, args.turn_limit, grid_s)
+    ser = None
+    if args.serial:
+        ser = serial.Serial(args.serial, 9600)
+
+    main(args.automated, args.turn_limit, grid_s, ser)
