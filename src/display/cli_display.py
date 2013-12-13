@@ -71,14 +71,14 @@ def _print_grid(grid):
 
 
 def _output_to_serial(grid, serial):
-    serial.write("clr\n")
+    serial.writelines("clr\n")
 
-    for x, row in enumerate(grid.get_cells()):
-        for y, col in enumerate(row):
+    for y, row in enumerate(grid.get_cells()):
+        for x, col in enumerate(row):
             if col.get_state() == Alive():
-                serial.write("set %s %s\n" % (x, y))
+                serial.writelines("set %s %s\n" % (x, y))
 
-    serial.write("drw\n")
+    serial.writelines("drw\n")
 
 
 def main(automated, turn_limit, grid_string, serial=None):
@@ -150,6 +150,6 @@ if __name__ == '__main__':
 
     ser = None
     if args.serial:
-        ser = serial.Serial(args.serial, 9600)
+        ser = serial.Serial(args.serial, 115200)
 
     main(args.automated, args.turn_limit, grid_s, ser)
