@@ -70,18 +70,19 @@ def _print_grid(grid):
         print(line)
 
 
-def _output_to_serial(grid, serial):
-    serial.writelines("clr\n")
+def _output_to_serial(grid, ser):
+    ser.write("clr\n")
 
     for y, row in enumerate(grid.get_cells()):
         for x, col in enumerate(row):
             if col.get_state() == Alive():
-                serial.writelines("set %s %s\n" % (x, y))
+                ser.write("set %s %s\n" % (x, y))
+                ser.read(2)
 
-    serial.writelines("drw\n")
+    ser.write("drw\n")
 
 
-def main(automated, turn_limit, grid_string, serial=None):
+def main(automated, turn_limit, grid_string, ser=None):
     grid = _parse_grid_string(grid_string)
     gol = GameOfLife(RuleSetStandard(), grid)
 
@@ -92,7 +93,7 @@ def main(automated, turn_limit, grid_string, serial=None):
         if not serial:
             _print_grid(gol.get_current_generation())
         else:
-            _output_to_serial(gol.get_current_generation(), serial)
+            _output_to_serial(gol.get_current_generation(), ser)
 
         print('Turn:  %s' % turns)
 
@@ -109,7 +110,7 @@ def main(automated, turn_limit, grid_string, serial=None):
             time.sleep(0.5)
         turns += 1
 
-    if serial:
+    if ser:
         serial.close()
 
 if __name__ == '__main__':
