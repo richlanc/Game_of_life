@@ -26,7 +26,7 @@ pattern_guide = """
         - An empty lines marks the end of the grid and the pattern complete
         - Any character that isn't '+' will be considered dead
 """
-
+sleep_time = 0.5
 
 def _get_grid():
     grid_s = ""
@@ -89,6 +89,7 @@ def main(automated, turn_limit, grid_string, ser=None):
     turns = 0
     running = True
     while running:
+        current_time = time.time()
 
         if not serial:
             _print_grid(gol.get_current_generation())
@@ -107,7 +108,10 @@ def main(automated, turn_limit, grid_string, ser=None):
             running = False
 
         if automated:
-            time.sleep(0.5)
+            delta = sleep_time - (time.time() - current_time)
+            print ("delta: ", delta)
+            if delta > 0:
+                time.sleep(delta)
         turns += 1
 
     if ser:
@@ -151,6 +155,6 @@ if __name__ == '__main__':
 
     ser = None
     if args.serial:
-        ser = serial.Serial(args.serial, 115200)
+        ser = serial.Serial(args.serial, 115200, timeout=1)
 
     main(args.automated, args.turn_limit, grid_s, ser)
