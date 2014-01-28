@@ -26,6 +26,8 @@ function Submitter(grid) {
                 $("#success_content").html("<p>This pattern will last " + result["turns"] + " " + gen_string + " and " + result["runtime"] + " " + sec_string + ".</p> <p>Do you wish to continue?</p>");
             },
             error: function() {
+                $("#loading_popup").modal("hide");
+
                 $.getScript('static/js/ajaxError.js', alertOpenHandler());
             }
         });
