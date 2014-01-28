@@ -4,7 +4,7 @@ this.alertOpenHandler = function() {
 	 * I.E. Move it onto screen
 	 */
 	 
-	 $("#error_alert").css("top", "auto").css("left", "auto");
+	 $("#error_alert").css("top", "10%").css("left", "3%");
      $("#error_content").html("<p>An issue occurred while connecting with the server. Please try again.</p>");
 }
 

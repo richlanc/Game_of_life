@@ -4,7 +4,7 @@
  */
 
 function Submitter(grid) {
-    var URL = "/pattern_receiver.json";
+    var URL = "/fpattern_receiver.json";
 
     this.submissionEventHandler = function(event) {
         /**

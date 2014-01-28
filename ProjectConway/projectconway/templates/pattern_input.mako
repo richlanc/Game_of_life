@@ -82,7 +82,7 @@
                 $("#clear_button").click(c.clearEventHandler);
 
                 // Set up error message handling
-                $("#closealert_button").click(alertCloseHandler);
+                $("#closealert_button").click(alertCloseHandler)
             });
         </script>
 </%block>
