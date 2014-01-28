@@ -2,9 +2,9 @@
 <%inherit file="projectconway:templates/template.mako" />
 
 <%block name="content">
-        <link href="static/css/projectConway.css" rel="stylesheet">
+        <link href="static/css/projectConway.css" rel="stylesheet" />
 
-        <div class="row">
+        <div class="row" id="content">
             <div class="col-xs-9 col-sm-7 col-md-5 col-xs-offset-1 col-sm-offset-2 col-md-offset-3" id="canvas-container">
                 <canvas id="pattern_input"></canvas>
             </div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="#">Next</a>
+                        <a class="btn btn-primary" href="/scheduler">Next</a>
                     </div>
                 </div>
             </div>
