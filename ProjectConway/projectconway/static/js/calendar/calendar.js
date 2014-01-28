@@ -55,7 +55,7 @@ if(!String.prototype.format) {
 		// /component/bootstrap-calendar/tmpls/
 		// or absolute
 		// http://localhost/component/bootstrap-calendar/tmpls/
-		tmpl_path:          '/static/js/tmpls/',
+		tmpl_path:          '/static/js/calendar/tmpls/',
 		tmpl_cache:         true,
 		classes:            {
 			months: {

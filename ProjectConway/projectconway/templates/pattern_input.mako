@@ -39,7 +39,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="/scheduler">Next</a>
+                        <a class="btn btn-primary" id="patternconfirmation_button">Next</a>
                     </div>
                 </div>
             </div>
@@ -53,10 +53,11 @@
 </%block>
 
 <%block name="scripts">
-        <script src="static/js/jcanvas.js"></script>
-        <script src="static/js/inputGrid.js"></script>
-        <script src="static/js/patternSubmission.js"></script>
-        <script src="static/js/patternClear.js"></script>
+        <script src="static/js/grid/jcanvas.js"></script>
+        <script src="static/js/grid/inputGrid.js"></script>
+        <script src="static/js/grid/patternSubmission.js"></script>
+        <script src="static/js/grid/patternClear.js"></script>
+        <script src="static/js/contentSwitchers.js"></script>
         <script src="static/js/ajaxError.js"></script>
         <script>
             <%
@@ -82,7 +83,10 @@
                 $("#clear_button").click(c.clearEventHandler);
 
                 // Set up error message handling
-                $("#closealert_button").click(alertCloseHandler)
+                $("#closealert_button").click(alertCloseHandler);
+
+                // Set up connection to next part of the process (scheduler)
+                $("#patternconfirmation_button").click(toScheduler);
             });
         </script>
 </%block>
