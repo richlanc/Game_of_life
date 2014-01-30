@@ -41,7 +41,7 @@ if(!String.prototype.format) {
 		// Day Start time and end time with time intervals
 		time_start: '06:00',
 		time_end: '22:00',
-		time_split: '30',
+		time_split: '120',
 		// Source of events data. It can be one of the following:
 		// - URL to return JSON list of events in special format.
 		//   {success:1, result: [....]} or for error {success:0, error:'Something terrible happened'}
@@ -50,7 +50,7 @@ if(!String.prototype.format) {
 		// - A function that received the start and end date, and that
 		//   returns an array of events (as described in events property description)
 		// - An array containing the events
-		events_source:      '/create',
+		events_source:      '<PLACEHOLDER!>',
 		// Path to templates should end with slash /. It can be as relative
 		// /component/bootstrap-calendar/tmpls/
 		// or absolute
@@ -411,24 +411,21 @@ if(!String.prototype.format) {
 		this.context.append(this.options.templates[this.options.view](data));
 		this._update();
 	};
-	
-	Calendar.prototype._calculate_hour_minutes = function(data) { 
+
+
+	Calendar.prototype._calculate_hour_minutes = function(data) {
+        /**
+         * This function was re-implemented by us!
+         */
 		var time_start = this.options.time_start.split(":");
 		var time_end = this.options.time_end.split(":");
-		var module=60/parseInt(this.options.time_split);
-		var t=(parseInt(time_end[0]) - parseInt(time_start[0]))*module;
-		var hour=0;
-		var minutes=0;
+        var time_split = this.options.time_split;
+		var t=(((parseInt(time_end[0])*60) + parseInt(time_end[1])) - ((parseInt(time_start[0])*60) + parseInt(time_start[1])))/time_split;
+		var start_minutes = (parseInt(time_start[0])*60) + parseInt(time_start[1]);
 		data.times = [];
 		for (var i=0;t>=i;i++) {
-			if (hour == 0)
-				hour = parseInt(time_start[0]);
-		else if (i%module==0) {
-			hour = hour + 1;
-			minutes = 0;
-		} else
-			minutes = parseInt(this.options.time_split)+minutes;
-			data.times.push(this._formatNumberLength(hour,2)+':'+this._formatNumberLength(minutes,2));
+            var t_minutes = start_minutes + (i * time_split);
+            data.times.push(this._formatNumberLength(Math.floor(t_minutes/60),2)+':'+this._formatNumberLength(t_minutes%60,2));
 		}
 	};
 
