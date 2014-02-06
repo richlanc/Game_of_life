@@ -29,6 +29,9 @@ function Submitter(grid) {
                 $("#loading_popup").modal("hide");
 
                 $.getScript('static/js/ajaxError.js', alertOpenHandler());
+                $("#loading_popup").modal("hide");
+                $("#error_alert").css("top", "5%").css("left", "3%");
+                $("#error_content").html("<p>An issue occurred while connecting with the server. Please try again.</p>");
             }
         });
     }

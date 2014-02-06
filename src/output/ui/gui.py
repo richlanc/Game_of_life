@@ -89,3 +89,7 @@ class Gui(Frame):
         Event: event object from the tkinter object
         '''
         pass
+
+if __name__ == '__main__':
+    print("Gui loading")
+    Gui()

@@ -2,9 +2,10 @@
 <%inherit file="projectconway:templates/template.mako" />
 
 <%block name="content">
-        <link href="static/css/projectConway.css" rel="stylesheet" />
-
-        <div class="row" id="content">
+	<link href="static/css/projectConway.css" rel="stylesheet">
+	
+	<div class="container">
+        <div class="row">
             <div class="col-xs-9 col-sm-7 col-md-5 col-xs-offset-1 col-sm-offset-2 col-md-offset-3" id="canvas-container">
                 <canvas id="pattern_input"></canvas>
             </div>
@@ -18,11 +19,13 @@
             </div>
         </div>
 
-        <div class="modal fade" id="loading_popup" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <p class="loading_popup_txt">Loading...</p>
+            <div class="modal fade" id="loading_popup" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p class="loading_popup_txt">Loading...</p>
+                            <img class="loading_image" src="static/images/loading.gif"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -35,21 +38,23 @@
                         <h4>Success!</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="success_content"></div>
+                       	<div id="success_content"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" id="patternconfirmation_button">Next</a>
+                        <a class="btn btn-primary" href="#">Next</a>
                     </div>
                 </div>
             </div>
         </div>
-
+		
         <div class="alert alert-danger alert-block in" id="error_alert">
             <button type="button" class="close" id="closealert_button">x</button>
             <h4>Opps! There has been an error:</h4>
             <div id="error_content"></div>
         </div>
+    </div>
+		
 </%block>
 
 <%block name="scripts">
