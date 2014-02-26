@@ -155,6 +155,6 @@ if __name__ == '__main__':
 
     ser = None
     if args.serial:
-        ser = serial.Serial(args.serial, 115200, timeout=1)
+        ser = serial.Serial(args.serial, 9600, timeout=1)
 
     main(args.automated, args.turn_limit, grid_s, ser)
